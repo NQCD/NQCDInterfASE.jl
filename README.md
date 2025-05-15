@@ -2,7 +2,7 @@
 
 [![Build Status](https://github.com/alexsp32/NQCDInterfaceASE.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/alexsp32/NQCDInterfaceASE.jl/actions/workflows/CI.yml?query=branch%3Amain)
 
-This package contains various interfaces between NQCD packages and the Python-based [Atomic Simulation Environment](). 
+This package contains various interfaces between NQCD packages and the Python-based [Atomic Simulation Environment](https://wiki.fysik.dtu.dk/ase/). 
 Since `ase` is the standard choice of package for atomic structure modification, the goal is to provide an interface that allows for easy connection to `ase.calculators` for compatibility with various Python-based MLIP codes. 
 In addition, structure conversion between the NQCD format and `ase` is provided for I/O to a larger number of file formats. 
 

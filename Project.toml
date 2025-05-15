@@ -1,7 +1,7 @@
 name = "NQCDInterfASE"
 uuid = "4606675f-2246-4a0b-99d5-75b910de637b"
 authors = ["Alexander Spears <alexander.spears@warwick.ac.uk> and contributors"]
-version = "0.0.1"
+version = "1.0.0"
 
 [deps]
 CondaPkg = "992eb4ea-22a4-4c89-a5bb-47a3300528ab"
