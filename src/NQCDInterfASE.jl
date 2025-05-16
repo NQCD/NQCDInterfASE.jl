@@ -63,7 +63,7 @@ end
 
 export AdiabaticASEModel
 
-AdiabaticASEModel(atoms::PythonCall.Py) = AdiabaticASEModel(atoms, size(atoms.get_positions(), 2)) # Easy constructor
+AdiabaticASEModel(atoms::PythonCall.Py) = AdiabaticASEModel(atoms, size(pyconvert(Matrix{Float64}, atoms.get_positions()), 2)) # Easy constructor
 
 NQCModels.ndofs(model::AdiabaticASEModel) = model.ndofs
 
