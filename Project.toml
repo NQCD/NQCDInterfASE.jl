@@ -13,8 +13,8 @@ UnitfulAtomic = "a7773ee8-282e-5fa2-be4e-bd808c38a91a"
 
 [compat]
 CondaPkg = "0.2.29"
-NQCBase = "0.2, 0.3, 0.4"
-NQCModels = "0.9"
+NQCBase = "0.5"
+NQCModels = "0.10"
 PythonCall = "0.9"
 Unitful = "1.22"
 UnitfulAtomic = "1.0"
