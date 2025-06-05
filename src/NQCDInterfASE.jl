@@ -56,31 +56,31 @@ This Model will synchronise the positions with the `ase` object and handle the u
 Implements both `potential` and `derivative!`.
 
 """
-struct AdiabaticASEModel{A} <: NQCModels.AdiabaticModels.AdiabaticModel
+struct ClassicalASEModel{A} <: NQCModels.ClassicalModels.ClassicalModel
 	atoms::A
 	ndofs::Int
 end
 
-export AdiabaticASEModel
+export ClassicalASEModel
 
-AdiabaticASEModel(atoms::PythonCall.Py) = AdiabaticASEModel(atoms, size(pyconvert(Matrix{Float64}, atoms.get_positions()), 2)) # Easy constructor
+ClassicalASEModel(atoms::PythonCall.Py) = ClassicalASEModel(atoms, size(pyconvert(Matrix{Float64}, atoms.get_positions()), 2)) # Easy constructor
 
-NQCModels.ndofs(model::AdiabaticASEModel) = model.ndofs
+NQCModels.ndofs(model::ClassicalASEModel) = model.ndofs
 
-function NQCModels.potential(model::AdiabaticASEModel, R::AbstractMatrix)
+function NQCModels.potential(model::ClassicalASEModel, R::AbstractMatrix)
 	set_coordinates!(model, R)
 	V = model.atoms.get_potential_energy()
 	return austrip(pyconvert(eltype(R), V) * u"eV")
 end
 
-function NQCModels.derivative!(model::AdiabaticASEModel, D::AbstractMatrix, R::AbstractMatrix)
+function NQCModels.derivative!(model::ClassicalASEModel, D::AbstractMatrix, R::AbstractMatrix)
 	set_coordinates!(model, R)
 	D .= -pyconvert(Matrix{eltype(D)}, model.atoms.get_forces())'
 	@. D = austrip(D * u"eV/Å")
 	return D
 end
 
-function set_coordinates!(model::AdiabaticASEModel, R)
+function set_coordinates!(model::ClassicalASEModel, R)
 	model.atoms.set_positions(ustrip.(auconvert.(u"Å", R')))
 end
 
@@ -88,7 +88,7 @@ end
 This module contains methods related to the NQCModels ASE interface that need access to Python types. (e.g. constraint checking)
 """
 
-function NQCModels.mobileatoms(model::AdiabaticASEModel, n::Int)
+function NQCModels.mobileatoms(model::ClassicalASEModel, n::Int)
 	return symdiff(1:length(model.atoms), [pyconvert(Vector, constraint.get_indices()) .+ 1 for constraint in model.atoms.constraints]...)
 end
 
