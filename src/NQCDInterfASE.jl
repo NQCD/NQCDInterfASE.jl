@@ -48,7 +48,7 @@ end
 ## NQCModels with ASE connection
 
 """
-	AdiabaticASEModel{A} <: AdiabaticModel
+	AdiabaticASEModel{A} <: ClassicalModel
 
 Wrapper for an `ase.Atoms` object that has a calculator attached.
 This Model will synchronise the positions with the `ase` object and handle the unit conversions.
