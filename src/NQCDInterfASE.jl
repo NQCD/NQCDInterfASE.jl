@@ -56,7 +56,7 @@ This Model will synchronise the positions with the `ase` object and handle the u
 Implements both `potential` and `derivative!`.
 
 """
-struct AdiabaticASEModel{A} <: NQCModels.AdiabaticModels.AdiabaticModel
+struct AdiabaticASEModel{A} <: NQCModels.ClassicalModels.ClassicalModel # do you want to rename this from Adiabatic to something else??
 	atoms::A
 	ndofs::Int
 end
