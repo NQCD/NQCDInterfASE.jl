@@ -9,13 +9,13 @@ using PythonCall
     R = rand(3, 4) .* 10
 
     ase_atoms = convert_to_ase_atoms(atoms, R, cell)
-    new_atoms, new_R, new_cell = convert_from_ase_atoms(ase_atoms)
+    nqcd_structure = convert_from_ase_atoms(ase_atoms)
     
-    @test new_atoms == atoms
-    @test new_cell.vectors ≈ cell.vectors
-    @test new_cell.inverse ≈ cell.inverse
-    @test new_cell.periodicity ≈ cell.periodicity
-    @test new_R ≈ R
+    @test nqcd_structure.atoms == atoms
+    @test nqcd_structure.cell.vectors ≈ cell.vectors
+    @test nqcd_structure.cell.inverse ≈ cell.inverse
+    @test nqcd_structure.cell.periodicity ≈ cell.periodicity
+    @test nqcd_structure.positions ≈ R
 end
 
 @testset "Multiple frames" begin
@@ -25,5 +25,14 @@ end
 
     ase_atoms = convert_to_ase_atoms(atoms, R, cell)
     out = convert_from_ase_atoms.(ase_atoms)
-    @test out isa Vector{<:Tuple}
+    # Correct types
+    @test out isa Vector{<:NQCBase.Structure}
+    for frame in structure
+        nqcd_structure = frame
+        @test nqcd_structure.atoms == atoms
+        @test nqcd_structure.cell.vectors ≈ cell.vectors
+        @test nqcd_structure.cell.inverse ≈ cell.inverse
+        @test nqcd_structure.cell.periodicity ≈ cell.periodicity
+        @test nqcd_structure.positions ≈ R
+    end
 end
