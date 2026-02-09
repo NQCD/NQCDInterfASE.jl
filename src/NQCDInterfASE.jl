@@ -35,7 +35,7 @@ function convert_to_ase_atoms(atoms::Atoms, R::Vector{<:Matrix}, cell::AbstractC
 end
 
 convert_from_ase_atoms(ase_atoms::PythonCall.Py) =
-	Atoms(ase_atoms), positions(ase_atoms), Cell(ase_atoms)
+	NQCBase.Structure(Atoms(ase_atoms), positions(ase_atoms), Cell(ase_atoms))
 
 NQCBase.Atoms(ase_atoms::PythonCall.Py) = Atoms{Float64}(Symbol.(PythonCall.PyList(ase_atoms.get_chemical_symbols())))
 
