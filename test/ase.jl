@@ -27,12 +27,12 @@ end
     out = convert_from_ase_atoms.(ase_atoms)
     # Correct types
     @test out isa Vector{<:NQCBase.Structure}
-    for frame in structure
+    for (frame, positions) in zip(out, R)
         nqcd_structure = frame
         @test nqcd_structure.atoms == atoms
         @test nqcd_structure.cell.vectors ≈ cell.vectors
         @test nqcd_structure.cell.inverse ≈ cell.inverse
         @test nqcd_structure.cell.periodicity ≈ cell.periodicity
-        @test nqcd_structure.positions ≈ R
+        @test nqcd_structure.positions ≈ positions
     end
 end
