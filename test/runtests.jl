@@ -1,4 +1,4 @@
-using NQCDInterfaceASE
+using NQCDInterfASE
 using Test
 
 include("ase.jl")

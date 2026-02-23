@@ -10,16 +10,20 @@ using Unitful, UnitfulAtomic
 export convert_from_ase_atoms
 export convert_to_ase_atoms
 
-const ase = PythonCall.pyimport("ase")
+# Updated method to load Python packages with newer PythonCall versions. 
+const ase = Ref{Py}()
+function __init__()
+	ase[] = pyimport("ase")
+end
 
 convert_to_ase_atoms(atoms::Atoms, R::Matrix) =
-	ase.Atoms(positions=ustrip.(u"Å", R'u"bohr"), symbols=string.(atoms.types))
+	ase[].Atoms(positions=ustrip.(u"Å", R'u"bohr"), symbols=string.(atoms.types))
 
 convert_to_ase_atoms(atoms::Atoms, R::Matrix, ::InfiniteCell) =
 	convert_to_ase_atoms(atoms, R)
 
 function convert_to_ase_atoms(atoms::Atoms, R::Matrix, cell::PeriodicCell)
-	ase.Atoms(
+	ase[].Atoms(
 		positions=ustrip.(u"Å", R'u"bohr"),
 		cell=ustrip.(u"Å", cell.vectors'u"bohr"),
 		symbols=string.(atoms.types),
