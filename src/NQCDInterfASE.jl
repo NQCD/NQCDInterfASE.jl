@@ -10,7 +10,7 @@ using Unitful, UnitfulAtomic
 export convert_from_ase_atoms
 export convert_to_ase_atoms
 
-# Updated method to load Python packages with newer PythonCall versions. 
+# Updated method to load Python packages with newer PythonCall versions.
 const ase = Ref{Py}()
 function __init__()
 	ase[] = pyimport("ase")
@@ -37,7 +37,7 @@ end
 convert_from_ase_atoms(ase_atoms::PythonCall.Py) =
 	NQCBase.Structure(Atoms(ase_atoms), positions(ase_atoms), Cell(ase_atoms))
 
-NQCBase.Atoms(ase_atoms::PythonCall.Py) = Atoms{Float64}(Symbol.(PythonCall.PyList(ase_atoms.get_chemical_symbols())))
+NQCBase.Atoms(ase_atoms::PythonCall.Py) = Atoms(Symbol.(PythonCall.PyList(ase_atoms.get_chemical_symbols())))
 
 positions(ase_atoms::PythonCall.Py) = austrip.(PythonCall.PyArray(ase_atoms.get_positions())'u"Å")
 
